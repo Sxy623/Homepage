@@ -1,5 +1,5 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
 class Item extends React.Component {
 
@@ -25,7 +25,7 @@ class Item extends React.Component {
         <tr>
           <td>{this.props.name}</td>
           <td>{this.props.age}</td>
-          <td><button type='button' onClick={this.hide}>Delete</button></td>
+          <td><button type="button" onClick={this.hide}>Delete</button></td>
         </tr>
       );
     }
@@ -52,11 +52,11 @@ function List(props) {
   );
 }
 
-class NetworkTable extends React.Component {
+class InfoTable extends React.Component {
 
   constructor(props) {
     super(props);
-    this.api = 'http://39.107.66.30:3000/mock/11/test';
+    this.api = "http://39.107.66.30:3000/mock/11/test";
     this.state = null;
   }
 
@@ -92,11 +92,11 @@ class NetworkTable extends React.Component {
     else {
       return (
         <div>
-          <h1>Loading ...</h1>
+          <h3>Loading ...</h3>
         </div>
       );
     }
   }
 }
 
-export default NetworkTable;
+export default InfoTable;
