@@ -2,6 +2,10 @@ ol, ul {
   padding-left: 30px;
 }
 
+li {
+  padding: 1px 0px;
+}
+
 .board-row:after {
   clear: both;
   content: "";

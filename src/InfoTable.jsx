@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 class Item extends React.Component {
 
@@ -19,13 +21,16 @@ class Item extends React.Component {
   render() {
     if (this.state.isHidden) {
       return null;
-    }
-    else {
+    } else {
       return (
         <tr>
           <td>{this.props.name}</td>
           <td>{this.props.age}</td>
-          <td><button type="button" onClick={this.hide}>Delete</button></td>
+          <td>
+            <IconButton aria-label="delete" color="primary" size="small" onClick={this.hide}>
+              <DeleteIcon />
+            </IconButton>
+          </td>
         </tr>
       );
     }
@@ -80,16 +85,14 @@ class InfoTable extends React.Component {
           <h3>Failed!</h3>
         </div>
       );
-    }
-    else if (this.state?.response?.data?.status === 200) {
+    } else if (this.state?.response?.data?.status === 200) {
       return (
         <div>
           <h3>Success!</h3>
           <List items={this.state?.response?.data?.data} />
         </div>
       );
-    }
-    else {
+    } else {
       return (
         <div>
           <h3>Loading ...</h3>

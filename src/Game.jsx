@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 import "./Game.css";
 
 function Square(props) {
@@ -86,7 +87,7 @@ class Game extends React.Component {
       "Go to game start"
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <Button size="small" variant="outlined" color="primary" onClick={() => this.jumpTo(move)}>{desc}</Button>
         </li>
       )
     })
@@ -105,6 +106,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <hr />
           <ol>{moves}</ol>
         </div>
       </div>
