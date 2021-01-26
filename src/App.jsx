@@ -4,6 +4,7 @@ import "./App.css";
 import Home from "./Home";
 import InfoTable from "./InfoTable";
 import Game from "./Game";
+import Flex from "./Flex";
 
 export default function App() {
   return (
@@ -17,6 +18,10 @@ export default function App() {
           <Redirect to="/tic-tac-toe" />
           <Game />
         </Route>
+        <Route path="/flex">
+          <Redirect to="/flex" />
+          <Flex />
+        </Route>
         <Route path="/">
           <Redirect to="/" />
           <Home />
@@ -24,7 +29,8 @@ export default function App() {
       </Switch>
       <Link to="/">Home</Link>{" | "}
       <Link to="/info-table">Info Table</Link>{" | "}
-      <Link to="/tic-tac-toe">Tic Tac Toe</Link>
+      <Link to="/tic-tac-toe">Tic Tac Toe</Link>{" | "}
+      <Link to="/flex">Flex</Link>
     </Router>
   );
 }
