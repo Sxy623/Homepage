@@ -5,6 +5,7 @@ import Home from "./Home";
 import InfoTable from "./InfoTable";
 import Game from "./Game";
 import Flex from "./Flex";
+import Conjugacion from "./Conjugacion";
 
 export default function App() {
   return (
@@ -22,6 +23,10 @@ export default function App() {
           <Redirect to="/flex" />
           <Flex />
         </Route>
+        <Route path="/conjugacion">
+          <Redirect to="/conjugacion" />
+          <Conjugacion />
+        </Route>
         <Route path="/">
           <Redirect to="/" />
           <Home />
@@ -30,7 +35,8 @@ export default function App() {
       <Link to="/">Home</Link>{" | "}
       <Link to="/info-table">Info Table</Link>{" | "}
       <Link to="/tic-tac-toe">Tic Tac Toe</Link>{" | "}
-      <Link to="/flex">Flex</Link>
+      <Link to="/flex">Flex</Link>{" | "}
+      <Link to="/conjugacion">Conjugación</Link>
     </Router>
   );
 }
