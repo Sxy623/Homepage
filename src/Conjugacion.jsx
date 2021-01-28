@@ -3,6 +3,27 @@ import "./Conjugacion.css"
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+function FormTextField(props) {
+  return (
+    <div className="conjugacion-text-field">
+      <TextField id="standard-basic" label={props.label} />
+    </div>
+  );
+}
+
+function FormTextFieldRow(props) {
+
+  const row = props.labels.map((label, index) => {
+    return <FormTextField key={index} label={label} />
+  });
+
+  return (
+    <div className="row">
+      {row}
+    </div>
+  );
+}
+
 class Conjugacion extends React.Component {
 
   render() {
@@ -11,28 +32,12 @@ class Conjugacion extends React.Component {
       <div>
         <h1>{question}</h1>
         <form noValidate autoComplete="off">
-          <div className="text-field">
-            <TextField id="standard-basic" label="Yo" />
+          <div className="conjugacion-form-box">
+            <FormTextFieldRow labels={["Yo", "Tú", "Él, ella, usted"]} />
+            <FormTextFieldRow labels={["Nosotros, -as", "Vosotros, -as", "Ellos, ellas, ustedes"]} />
           </div>
-          <div className="text-field">
-            <TextField id="standard-basic" label="Tú" />
-          </div>
-          <div className="text-field">
-            <TextField id="standard-basic" label="Él, ella, usted" />
-          </div>
-          <br />
-          <div className="text-field">
-            <TextField id="standard-basic" label="Nosotros, -as" />
-          </div>
-          <div className="text-field">
-            <TextField id="standard-basic" label="Vosotros, -as" />
-          </div>
-          <div className="text-field">
-            <TextField id="standard-basic" label="Ellos, ellas, ustedes" />
-          </div>
-          <br />
-          <div className="button">
-           <Button className="button" variant="outlined" color="primary">确认</Button>
+          <div className="conjugacion-button">
+            <Button variant="outlined" color="primary">确认</Button>
           </div>
         </form>
       </div>

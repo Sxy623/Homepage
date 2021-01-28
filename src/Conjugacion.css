@@ -1,8 +1,19 @@
-.text-field {
-  display: inline;
-  margin: 10px;
+.conjugacion-form-box {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
-.button {
+.conjugacion-form-box .row {
+  flex-direction: row;
+}
+
+.conjugacion-text-field {
+  display: inline;
+  margin: 20px;
+}
+
+.conjugacion-button {
   margin: 20px;
 }
