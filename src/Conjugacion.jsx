@@ -40,7 +40,8 @@ class Conjugacion extends React.Component {
     this.state = {
       formValues: Array(6).fill(""),
       answers: ["hablo", "hablas", "habla", "hablamos", "habláis", "hablan"],
-      status: Array(6).fill(true)
+      status: Array(6).fill(true),
+      showNext: false
     }
   }
 
@@ -54,6 +55,7 @@ class Conjugacion extends React.Component {
 
   checkAnswer() {
     let status = [];
+    let showNext = true;
     const answers = this.state.answers;
     const formValues = this.state.formValues;
     for (let i = 0; i < answers.length; i++) {
@@ -61,10 +63,12 @@ class Conjugacion extends React.Component {
         status.push(true)
       } else {
         status.push(false)
+        showNext = false;
       }
     }
     this.setState({
-      status: status
+      status: status,
+      showNext: showNext
     });
   }
 
@@ -93,6 +97,12 @@ class Conjugacion extends React.Component {
           <div className="conjugacion-button">
             <Button variant="outlined" color="primary" onClick={() => this.checkAnswer()}>确认</Button>
           </div>
+          {
+            this.state.showNext &&
+            <div className="conjugacion-button">
+              <Button variant="outlined" color="primary" onClick={() => this.checkAnswer()}>下一题</Button>
+            </div>
+          }
         </form>
       </div>
     );
