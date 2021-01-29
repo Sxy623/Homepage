@@ -55,13 +55,39 @@ function FormTextFieldRow(props) {
   );
 }
 
+let questions = [
+  {
+    description: "ser",
+    answers: ["soy", "eres", "es", "somos", "sois", "son"],
+  },
+  {
+    description: "hablar",
+    answers: ["hablo", "hablas", "habla", "hablamos", "habláis", "hablan"],
+  },
+  {
+    description: "comer",
+    answers: ["como", "comes", "come", "comemos", "coméis", "comen"],
+  },
+  {
+    description: "escribir",
+    answers: ["escribo", "escribes", "escribe", "escribimos", "escribís", "escriben"],
+  }
+]
+
+function randomQuestion() {
+  let index = Math.floor(Math.random() * questions.length);
+  return questions[index];
+}
+
 class Conjugacion extends React.Component {
 
   constructor(props) {
     super(props);
+    let question = randomQuestion();
     this.state = {
       formValues: Array(6).fill(""),
-      answers: ["hablo", "hablas", "habla", "hablamos", "habláis", "hablan"],
+      description: question.description,
+      answers: question.answers,
       status: Array(6).fill(true),
       showNext: false
     }
@@ -94,11 +120,22 @@ class Conjugacion extends React.Component {
     });
   }
 
+  nextQuestion() {
+    let question = randomQuestion();
+    this.setState({
+      formValues: Array(6).fill(""),
+      description: question.description,
+      answers: question.answers,
+      status: Array(6).fill(true),
+      showNext: false
+    });
+  }
+
   render() {
-    let question = "hablar"
+    let description = this.state.description;
     return (
       <div>
-        <h1>{question}</h1>
+        <h1>{description}</h1>
         <form noValidate autoComplete="off">
           <div className="conjugacion-form-box">
             <FormTextFieldRow
@@ -124,7 +161,7 @@ class Conjugacion extends React.Component {
           {
             this.state.showNext &&
             <div className="conjugacion-button">
-              <Button variant="outlined" color="primary" onClick={() => this.checkAnswer()}>下一题</Button>
+              <Button variant="outlined" color="primary" onClick={() => this.nextQuestion()}>下一题</Button>
             </div>
           }
         </form>
