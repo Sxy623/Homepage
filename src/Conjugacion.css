@@ -7,6 +7,7 @@
 
 .conjugacion-form-box .row {
   flex-direction: row;
+  margin: 10px;
 }
 
 .conjugacion-text-field {
