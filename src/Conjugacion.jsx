@@ -9,12 +9,26 @@ function FormTextField(props) {
     props.onChange(props.index, event.target.value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      props.checkAnswer();
+    }
+  }
+
   const error = props.status === false;
   const helperText = props.status ? "" : "Incorrect.";
 
   return (
     <div className="conjugacion-text-field">
-      <TextField error={error} id="standard-basic" label={props.label} value={props.value} onChange={handleChange} helperText={helperText} />
+      <TextField
+        id="standard-basic"
+        label={props.label}
+        value={props.value}
+        error={error}
+        helperText={helperText}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+      />
     </div>
   );
 }
@@ -23,7 +37,15 @@ function FormTextFieldRow(props) {
 
   const row = props.labels.map((label, order) => {
     let index = props.indices[order]
-    return <FormTextField key={order} label={label} index={index} value={props.formValues[index]} status={props.status[index]} onChange={props.onChange} />
+    return <FormTextField
+      key={order}
+      label={label}
+      index={index}
+      value={props.formValues[index]}
+      status={props.status[index]}
+      onChange={props.onChange}
+      checkAnswer={props.checkAnswer}
+    />
   });
 
   return (
@@ -85,6 +107,7 @@ class Conjugacion extends React.Component {
               formValues={this.state.formValues}
               status={this.state.status}
               onChange={(index, value) => this.handleChange(index, value)}
+              checkAnswer={() => this.checkAnswer()}
             />
             <FormTextFieldRow
               labels={["Nosotros, -as", "Vosotros, -as", "Ellos, ellas, ustedes"]}
@@ -92,6 +115,7 @@ class Conjugacion extends React.Component {
               formValues={this.state.formValues}
               status={this.state.status}
               onChange={(index, value) => this.handleChange(index, value)}
+              checkAnswer={() => this.checkAnswer()}
             />
           </div>
           <div className="conjugacion-button">
