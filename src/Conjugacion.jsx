@@ -1,22 +1,22 @@
-import React from "react";
-import "./Conjugacion.css"
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React from 'react'
+import './Conjugacion.css'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import axios from 'axios'
 
-function FormTextField(props) {
-
+function FormTextField (props) {
   const handleChange = (event) => {
-    props.onChange(props.index, event.target.value);
-  };
+    props.onChange(props.index, event.target.value)
+  }
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
-      props.checkAnswer();
+      props.checkAnswer()
     }
   }
 
-  const error = props.status === false;
-  const helperText = props.status ? "" : "Incorrect.";
+  const error = props.status === false
+  const helperText = props.status ? '' : 'Incorrect.'
 
   return (
     <div className="conjugacion-text-field">
@@ -30,13 +30,12 @@ function FormTextField(props) {
         onKeyDown={handleKeyDown}
       />
     </div>
-  );
+  )
 }
 
-function FormTextFieldRow(props) {
-
+function FormTextFieldRow (props) {
   const row = props.labels.map((label, order) => {
-    let index = props.indices[order]
+    const index = props.indices[order]
     return <FormTextField
       key={order}
       label={label}
@@ -46,46 +45,46 @@ function FormTextFieldRow(props) {
       onChange={props.onChange}
       checkAnswer={props.checkAnswer}
     />
-  });
+  })
 
   return (
     <div className="row">
       {row}
     </div>
-  );
+  )
 }
 
-let questions = [
+const questions = [
   {
-    description: "ser",
-    answers: ["soy", "eres", "es", "somos", "sois", "son"],
+    description: 'ser',
+    answers: ['soy', 'eres', 'es', 'somos', 'sois', 'son']
   },
   {
-    description: "hablar",
-    answers: ["hablo", "hablas", "habla", "hablamos", "habláis", "hablan"],
+    description: 'hablar',
+    answers: ['hablo', 'hablas', 'habla', 'hablamos', 'habláis', 'hablan']
   },
   {
-    description: "comer",
-    answers: ["como", "comes", "come", "comemos", "coméis", "comen"],
+    description: 'comer',
+    answers: ['como', 'comes', 'come', 'comemos', 'coméis', 'comen']
   },
   {
-    description: "escribir",
-    answers: ["escribo", "escribes", "escribe", "escribimos", "escribís", "escriben"],
+    description: 'escribir',
+    answers: ['escribo', 'escribes', 'escribe', 'escribimos', 'escribís', 'escriben']
   }
 ]
 
-function randomQuestion() {
-  let index = Math.floor(Math.random() * questions.length);
-  return questions[index];
+function randomQuestion () {
+  const index = Math.floor(Math.random() * questions.length)
+  return questions[index]
 }
 
 class Conjugacion extends React.Component {
-
-  constructor(props) {
-    super(props);
-    let question = randomQuestion();
+  constructor (props) {
+    super(props)
+    const question = randomQuestion()
+    this.api = 'http://47.110.67.46:3000/conjugacion/get-question'
     this.state = {
-      formValues: Array(6).fill(""),
+      formValues: Array(6).fill(''),
       description: question.description,
       answers: question.answers,
       status: Array(6).fill(true),
@@ -93,53 +92,66 @@ class Conjugacion extends React.Component {
     }
   }
 
-  handleChange(index, value) {
-    let formValues = this.state.formValues.slice();
-    formValues[index] = value;
-    this.setState({
-      formValues: formValues
-    });
+  componentDidMount () {
+    axios.get(this.api)
+      .then(response => {
+        // this.setState({
+        //   response: response
+        // })
+        // console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
-  checkAnswer() {
-    let status = [];
-    let showNext = true;
-    const answers = this.state.answers;
-    const formValues = this.state.formValues;
+  handleChange (index, value) {
+    const formValues = this.state.formValues.slice()
+    formValues[index] = value
+    this.setState({
+      formValues: formValues
+    })
+  }
+
+  checkAnswer () {
+    const status = []
+    let showNext = true
+    const answers = this.state.answers
+    const formValues = this.state.formValues
     for (let i = 0; i < answers.length; i++) {
       if (answers[i] === formValues[i]) {
         status.push(true)
       } else {
         status.push(false)
-        showNext = false;
+        showNext = false
       }
     }
     this.setState({
       status: status,
       showNext: showNext
-    });
+    })
   }
 
-  nextQuestion() {
-    let question = randomQuestion();
+  nextQuestion () {
+    const question = randomQuestion()
     this.setState({
-      formValues: Array(6).fill(""),
+      formValues: Array(6).fill(''),
       description: question.description,
       answers: question.answers,
       status: Array(6).fill(true),
       showNext: false
-    });
+    })
   }
 
-  render() {
-    let description = this.state.description;
+  render () {
+    const description = this.state.description
     return (
       <div>
         <h1>{description}</h1>
         <form noValidate autoComplete="off">
           <div className="conjugacion-form-box">
             <FormTextFieldRow
-              labels={["Yo", "Tú", "Él, ella, usted"]}
+              labels={['Yo', 'Tú', 'Él, ella, usted']}
               indices={[0, 1, 2]}
               formValues={this.state.formValues}
               status={this.state.status}
@@ -147,7 +159,7 @@ class Conjugacion extends React.Component {
               checkAnswer={() => this.checkAnswer()}
             />
             <FormTextFieldRow
-              labels={["Nosotros, -as", "Vosotros, -as", "Ellos, ellas, ustedes"]}
+              labels={['Nosotros, -as', 'Vosotros, -as', 'Ellos, ellas, ustedes']}
               indices={[3, 4, 5]}
               formValues={this.state.formValues}
               status={this.state.status}
@@ -166,8 +178,8 @@ class Conjugacion extends React.Component {
           }
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default Conjugacion;
+export default Conjugacion

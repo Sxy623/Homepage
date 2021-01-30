@@ -1,13 +1,13 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
-import "./App.css";
-import Home from "./Home";
-import InfoTable from "./InfoTable";
-import Game from "./Game";
-import Flex from "./Flex";
-import Conjugacion from "./Conjugacion";
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import './App.css'
+import Home from './Home'
+import InfoTable from './InfoTable'
+import Game from './Game'
+import Flex from './Flex'
+import Conjugacion from './Conjugacion'
 
-export default function App() {
+export default function App () {
   return (
     <Router>
       <Switch>
@@ -32,11 +32,11 @@ export default function App() {
           <Home />
         </Route>
       </Switch>
-      <Link to="/">Home</Link>{" | "}
-      <Link to="/info-table">Info Table</Link>{" | "}
-      <Link to="/tic-tac-toe">Tic Tac Toe</Link>{" | "}
-      <Link to="/flex">Flex</Link>{" | "}
+      <Link to="/">Home</Link>{' | '}
+      <Link to="/info-table">Info Table</Link>{' | '}
+      <Link to="/tic-tac-toe">Tic Tac Toe</Link>{' | '}
+      <Link to="/flex">Flex</Link>{' | '}
       <Link to="/conjugacion">Conjugación</Link>
     </Router>
-  );
+  )
 }
