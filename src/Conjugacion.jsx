@@ -54,39 +54,14 @@ function FormTextFieldRow (props) {
   )
 }
 
-const questions = [
-  {
-    description: 'ser',
-    answers: ['soy', 'eres', 'es', 'somos', 'sois', 'son']
-  },
-  {
-    description: 'hablar',
-    answers: ['hablo', 'hablas', 'habla', 'hablamos', 'habláis', 'hablan']
-  },
-  {
-    description: 'comer',
-    answers: ['como', 'comes', 'come', 'comemos', 'coméis', 'comen']
-  },
-  {
-    description: 'escribir',
-    answers: ['escribo', 'escribes', 'escribe', 'escribimos', 'escribís', 'escriben']
-  }
-]
-
-function randomQuestion () {
-  const index = Math.floor(Math.random() * questions.length)
-  return questions[index]
-}
-
 class Conjugacion extends React.Component {
   constructor (props) {
     super(props)
-    const question = randomQuestion()
     this.api = 'http://47.110.67.46:3000/conjugacion/get-question'
     this.state = {
       formValues: Array(6).fill(''),
-      description: question.description,
-      answers: question.answers,
+      description: '',
+      answers: Array(6).fill(''),
       status: Array(6).fill(true),
       showNext: false
     }
@@ -95,10 +70,11 @@ class Conjugacion extends React.Component {
   componentDidMount () {
     axios.get(this.api)
       .then(response => {
-        // this.setState({
-        //   response: response
-        // })
-        // console.log(response)
+        const answers = JSON.parse(response.data.answers)
+        this.setState({
+          description: response.data.description,
+          answers: answers
+        })
       })
       .catch(error => {
         console.log(error)
@@ -133,14 +109,20 @@ class Conjugacion extends React.Component {
   }
 
   nextQuestion () {
-    const question = randomQuestion()
-    this.setState({
-      formValues: Array(6).fill(''),
-      description: question.description,
-      answers: question.answers,
-      status: Array(6).fill(true),
-      showNext: false
-    })
+    axios.get(this.api)
+      .then(response => {
+        const answers = JSON.parse(response.data.answers)
+        this.setState({
+          formValues: Array(6).fill(''),
+          description: response.data.description,
+          answers: answers,
+          status: Array(6).fill(true),
+          showNext: false
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   render () {
