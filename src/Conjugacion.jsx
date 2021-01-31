@@ -3,6 +3,7 @@ import './Conjugacion.css'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
+import { useViewport } from './ViewportProvider'
 
 function FormTextField (props) {
   const handleChange = (event) => {
@@ -52,6 +53,86 @@ function FormTextFieldRow (props) {
       {row}
     </div>
   )
+}
+
+function FormTextFieldPanel (props) {
+  const { width } = useViewport()
+  const breakpoint1 = 650
+  const breakpoint2 = 450
+  if (width > breakpoint1) {
+    return (
+      <div className="conjugacion-form-box">
+        <FormTextFieldRow
+          labels={['Yo', 'Tú', 'Él, ella, usted']}
+          indices={[0, 1, 2]}
+          formValues={props.formValues}
+          status={props.status}
+          onChange={props.onChange}
+          checkAnswer={props.checkAnswer}
+        />
+        <FormTextFieldRow
+          labels={['Nosotros, -as', 'Vosotros, -as', 'Ellos, ellas, ustedes']}
+          indices={[3, 4, 5]}
+          formValues={props.formValues}
+          status={props.status}
+          onChange={props.onChange}
+          checkAnswer={props.checkAnswer}
+        />
+      </div>
+    )
+  } else if (width > breakpoint2) {
+    return (
+      <div className="conjugacion-form-box">
+        <FormTextFieldRow
+          labels={['Yo', 'Tú']}
+          indices={[0, 1]}
+          formValues={props.formValues}
+          status={props.status}
+          onChange={props.onChange}
+          checkAnswer={props.checkAnswer}
+        />
+        <FormTextFieldRow
+          labels={['Él, ella, usted', 'Nosotros, -as']}
+          indices={[2, 3]}
+          formValues={props.formValues}
+          status={props.status}
+          onChange={props.onChange}
+          checkAnswer={props.checkAnswer}
+        />
+        <FormTextFieldRow
+          labels={['Vosotros, -as', 'Ellos, ellas, ustedes']}
+          indices={[4, 5]}
+          formValues={props.formValues}
+          status={props.status}
+          onChange={props.onChange}
+          checkAnswer={props.checkAnswer}
+        />
+      </div>
+    )
+  } else {
+    const labels = ['Yo', 'Tú', 'Él, ella, usted', 'Nosotros, -as', 'Vosotros, -as', 'Ellos, ellas, ustedes']
+    const column = labels.map((label, index) => {
+      const labels = [label]
+      const indices = [index]
+      return (
+        <FormTextFieldRow
+          key={index}
+          labels={labels}
+          indices={indices}
+          formValues={props.formValues}
+          status={props.status}
+          onChange={props.onChange}
+          checkAnswer={props.checkAnswer}
+        />
+      )
+    })
+
+    return (
+      <div className="conjugacion-form-box">
+        {column}
+      </div>
+    )
+  }
 }
 
 class Conjugacion extends React.Component {
@@ -131,24 +212,12 @@ class Conjugacion extends React.Component {
       <div>
         <h1>{description}</h1>
         <form noValidate autoComplete="off">
-          <div className="conjugacion-form-box">
-            <FormTextFieldRow
-              labels={['Yo', 'Tú', 'Él, ella, usted']}
-              indices={[0, 1, 2]}
-              formValues={this.state.formValues}
-              status={this.state.status}
-              onChange={(index, value) => this.handleChange(index, value)}
-              checkAnswer={() => this.checkAnswer()}
-            />
-            <FormTextFieldRow
-              labels={['Nosotros, -as', 'Vosotros, -as', 'Ellos, ellas, ustedes']}
-              indices={[3, 4, 5]}
-              formValues={this.state.formValues}
-              status={this.state.status}
-              onChange={(index, value) => this.handleChange(index, value)}
-              checkAnswer={() => this.checkAnswer()}
-            />
-          </div>
+          <FormTextFieldPanel
+            formValues={this.state.formValues}
+            status={this.state.status}
+            onChange={(index, value) => this.handleChange(index, value)}
+            checkAnswer={() => this.checkAnswer()}
+          />
           <div className="conjugacion-button">
             <Button variant="outlined" color="primary" onClick={() => this.checkAnswer()}>确认</Button>
           </div>
