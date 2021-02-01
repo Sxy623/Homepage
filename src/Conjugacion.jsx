@@ -142,6 +142,7 @@ class Conjugacion extends React.Component {
     this.state = {
       formValues: Array(6).fill(''),
       description: '',
+      tense: '',
       answers: Array(6).fill(''),
       status: Array(6).fill(true),
       showNext: false
@@ -154,6 +155,7 @@ class Conjugacion extends React.Component {
         const answers = JSON.parse(response.data.answers)
         this.setState({
           description: response.data.description,
+          tense: response.data.tense,
           answers: answers
         })
       })
@@ -196,6 +198,7 @@ class Conjugacion extends React.Component {
         this.setState({
           formValues: Array(6).fill(''),
           description: response.data.description,
+          tense: response.data.tense,
           answers: answers,
           status: Array(6).fill(true),
           showNext: false
@@ -212,9 +215,11 @@ class Conjugacion extends React.Component {
 
   render () {
     const description = this.state.description
+    const tense = this.state.tense
     return (
       <div>
         <h1>{description}</h1>
+        <h2>{tense}</h2>
         <form noValidate autoComplete="off">
           <FormTextFieldPanel
             formValues={this.state.formValues}
