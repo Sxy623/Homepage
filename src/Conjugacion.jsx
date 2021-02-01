@@ -206,6 +206,10 @@ class Conjugacion extends React.Component {
       })
   }
 
+  skipQuestion () {
+    this.nextQuestion()
+  }
+
   render () {
     const description = this.state.description
     return (
@@ -227,6 +231,9 @@ class Conjugacion extends React.Component {
               <Button variant="outlined" color="primary" onClick={() => this.nextQuestion()}>下一题</Button>
             </div>
           }
+          <div className="conjugacion-button">
+            <Button variant="outlined" color="primary" onClick={() => this.skipQuestion()}>跳过</Button>
+          </div>
         </form>
       </div>
     )
